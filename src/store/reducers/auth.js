@@ -8,17 +8,17 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 name: action.name,
                 password: action.password
-            }
+            };
         case 'LOGOUT':
             return {
                 ...state,
                 name: '',
                 password: ''
-            }
+            };
         default:
             return state
     }
  
 };
 
-export default authReducer
+export default authReducer;
