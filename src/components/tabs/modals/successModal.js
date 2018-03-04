@@ -9,20 +9,22 @@ const SuccessModal = (props) => (
         onRequestClose={() => props.closeModal}
     >
         <View style={successModalStyle.container}>
-            <Text>
+            <Text style={successModalStyle.text}>
                 Correct. That Is The Right Answer
             </Text>
 
             <Icon
-                name="check" size={20} color="#000"
+                name="check" size={100} color="#42f442"
             />
-            <View>
+            <View style={successModalStyle.buttonContainer}>
                 <Button
-                    title="Answer Question Again"
+                    style={successModalStyle.button}
+                    title="Repeat Question"
                     onPress={props.closeModal}
                 />
 
                 <Button
+                    style={successModalStyle.button}
                     title="Next Question"
                     onPress={props.nextQuestion}
                 />
@@ -32,7 +34,24 @@ const SuccessModal = (props) => (
 );
 
 const successModalStyle = StyleSheet.create({
-
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    text: {
+        fontSize: 32,
+        fontWeight:"bold"
+    },
+    buttonContainer: {
+        flexDirection: "row",
+        width: "80%",
+        justifyContent: "space-around",
+        marginTop: "2%"
+    },
+    button: {
+       // width: "40%"
+    }
 });
 
 export default SuccessModal;

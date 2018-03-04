@@ -1,7 +1,7 @@
 const initialState = () => {
     isLoggedin: false;
     name: '';
-    password: '';
+    email: '';
     syllabus: [];
     selected_syllabus: '';
     unit: [];

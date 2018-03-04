@@ -17,12 +17,20 @@
     "uuid": "^3.1.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-jest": "22.0.4",
     "babel-preset-react-native": "4.0.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-react-16-adapter-setup": "^0.1.0",
     "jest": "22.0.4",
+    "jest-enzyme": "^4.2.0",
+    "react-dom": "^16.2.0",
     "react-test-renderer": "16.0.0"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",
+    "setupFiles": ["enzyme-react-16-adapter-setup"]
   }
 }

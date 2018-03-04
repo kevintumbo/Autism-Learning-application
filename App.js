@@ -23,6 +23,7 @@ Navigation.registerComponent("AutismApplication.QuestionScreen", () => QuestionS
 
 Navigation.startSingleScreenApp({
     screen: {
-        screen: "AutismApplication.SyllabusScreen"
+        screen: "AutismApplication.LoginScreen",
+        title: "Log In"
     },
 });
