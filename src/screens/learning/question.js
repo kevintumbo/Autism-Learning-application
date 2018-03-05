@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { ScrollView, View, StyleSheet } from 'react-native'
 import SQLite from 'react-native-sqlite-storage';
 import QuestionCard from '../../components/learning/questionCard';
-import SuccessModal from '../../components/modals/successModal';
-import FailureModal from '../../components/modals/failureModal';
-import CompletionModal from '../../components/modals/completionModal';
+import SuccessModal from '../../components/tabs/modals/successModal';
+import FailureModal from '../../components/tabs/modals/failureModal';
+import CompletionModal from '../../components/tabs/modals/completionModal';
 
 class QuestionScreen extends Component {
     constructor(props) {
