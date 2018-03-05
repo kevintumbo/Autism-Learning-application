@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, View, StyleSheet } from 'react-native'
+import { ScrollView, View, StyleSheet, Text } from 'react-native'
 import SQLite from 'react-native-sqlite-storage';
+import ProgressCircle from 'react-native-progress-circle';
 import QuestionCard from '../../components/learning/questionCard';
 import SuccessModal from '../../components/tabs/modals/successModal';
 import FailureModal from '../../components/tabs/modals/failureModal';
@@ -11,6 +12,7 @@ class QuestionScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            progress: 0,
             questions: [],
             current_question: [],
             successModalVisible: false,
@@ -94,7 +96,8 @@ class QuestionScreen extends Component {
         this.setState({completionModalVisible:false});
         this.setState(() => {
             return {
-                current_question: [this.state.questions[0]]
+                current_question: [this.state.questions[0]],
+                progress: 0
             }
         });
     };
@@ -108,9 +111,21 @@ class QuestionScreen extends Component {
                     current_question: [this.state.questions[index + 1]]
                 }
             });
+            this.progress(index + 1);
         }
     };
 
+    progress = (index) => {
+        let progress = 0;
+        const all_questions = this.state.questions.length;
+        const current_question = this.state.questions.indexOf(this.state.questions[index]);
+        progress = Math.round((current_question / all_questions) * 100);
+        this.setState({progress});
+        console.log('all_questions', all_questions);
+        console.log('current_question', current_question);
+        console.log('progress', progress);
+        console.log(this.state.progress);
+    }
 
 
     render() {
@@ -140,6 +155,16 @@ class QuestionScreen extends Component {
                         chooseAnotherUnit={ () => this.closeCompletionModal() }
                         repeatUnit={ () => this.repeatUnitHandler()}
                     />
+                    <ProgressCircle
+                        percent={this.state.progress}
+                        radius={50}
+                        borderWidth={8}
+                        color="#3399FF"
+                        shadowColor="#999"
+                        bgColor="#fff"
+                    >
+                        <Text style={{ fontSize: 18 }}>{this.state.progress + '%'}</Text>
+                    </ProgressCircle>
                     {question}
                 </View>
             </ScrollView>
