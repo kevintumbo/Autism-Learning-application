@@ -1,127 +1,119 @@
-import React, { Component } from 'react';
-import {View, Text, StyleSheet, ScrollView, } from 'react-native';
-import SQLite from 'react-native-sqlite-storage';
-import { connect } from 'react-redux'
+import React, { Component } from "react";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
+import SQLite from "react-native-sqlite-storage";
+import { connect } from "react-redux";
 
-import SyllabusOutput from '../../components/learning/syllabusList';
-import AppTabs from '../../components/tabs/AppTabs';
-import {selectSyllabus} from "../../store/actions/syllabus";
+import SyllabusOutput from "../../components/learning/syllabusList";
+import AppTabs from "../../components/tabs/AppTabs";
+import { selectSyllabus } from "../../store/actions/syllabus";
 
 
 class SyllabusScreen extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-           syllabus: [],
-        };
+	constructor(props) {
+		super(props);
+		this.state = {
+			syllabus: [],
+		};
+	}
 
-    }
+	componentWillMount() {
+		const db = SQLite.openDatabase(
+			{ name: "app.db", createFromLocation: "~app.db" },
+			this.openCB, this.successCB(), this.errorCB,
+		);
+		db.transaction((tx) => {
+			tx.executeSql("SELECT * FROM syllabus", [], (tx, results) => {
+				// Get rows with Web SQL Database spec compliance.
+				const len = results.rows.length;
+				for (let i = 0; i < len; i += 1) {
+					const row = results.rows.item(i);
+					this.setState(prevState => ({ syllabus: prevState.syllabus.concat(row) }));
+				}
+			});
+		});
+	}
 
-    componentWillMount() {
-        let db = SQLite.openDatabase({name: 'app.db', createFromLocation : "~app.db"},
-            this.openCB, this.successCB() ,this.errorCB);
-        db.transaction((tx) => {
-            tx.executeSql('SELECT * FROM syllabus', [], (tx, results) => {
-                console.log("Query completed");
+		onSelectSyllabus = (syllabusId) => {
+			this.props.selectedSyllabus(syllabusId);
+			this.props.navigator.push({
+				screen: "AutismApplication.UnitScreen",
+				title: "Unit page",
+			});
+		};
 
-                // Get rows with Web SQL Database spec compliance.
+		errorCB = (err) => {
+			console.log(`SQL Error: ${err}`);
+		}
 
-                const len = results.rows.length;
-                for (let i = 0; i < len; i++) {
-                    let row = results.rows.item(i);
-                    this.setState((prevState) => {
-                        return {syllabus: prevState.syllabus.concat(row)};
-                    });
-                }
-            });
-        });
-    }
+		successCB = () => {
+			console.log("SQL executed fine");
+		}
 
-    errorCB(err) {
-        console.log("SQL Error: " + err);
-    }
+		openCB = () => {
+			console.log("Database OPENED");
+		}
 
-    successCB() {
-        console.log("SQL executed fine");
-    }
+		render() {
+			const list = this.state.syllabus.map(syllabus => (
+				<SyllabusOutput
+					key={syllabus.id}
+					syllabus={syllabus}
+					onPress={() => this.onSelectSyllabus(syllabus.id)}
+				/>
+			));
 
-    openCB() {
-        console.log("Database OPENED");
-    }
+			return (
+				<ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+					<View style={syllabusStyles.container}>
+						<AppTabs />
+						<View style={syllabusStyles.syllabusList}>
+							<View style={syllabusStyles.syllabusListHeader}>
+								<Text>
+																Learning App Contents
+								</Text>
+							</View>
+							<View>
+								{list}
+							</View>
 
-    onSelectSyllabus = (syllabus_id) => {
-        this.props.selectedSyllabus(syllabus_id);
-        this.props.navigator.push({
-            screen: "AutismApplication.UnitScreen",
-            title: "Unit page",
-        });
-    };
-
-    render() {
-
-        const list = this.state.syllabus.map(syllabus => (
-            <SyllabusOutput
-                key={syllabus.id}
-                syllabus={syllabus}
-                onPress={() => this.onSelectSyllabus(syllabus.id)}
-            />
-        ));
-
-        return (
-            <ScrollView contentContainerStyle={{flexGrow:1}}>
-                <View style={syllabusStyles.container}>
-                        <AppTabs/>
-                        <View style={syllabusStyles.syllabusList}>
-                            <View style={syllabusStyles.syllabusListHeader}>
-                                <Text>
-                                    Learning App Contents
-                                </Text>
-                            </View>
-                            <View>
-                                {list}
-                            </View>
-
-                        </View>
-                </View>
-            </ScrollView>
-        );
-    }
+						</View>
+					</View>
+				</ScrollView>
+			);
+		}
 }
 
 const syllabusStyles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: "center",
-        backgroundColor: "#00ecff",
-        paddingBottom: "5%"
-    },
-    syllabusList: {
-        flexDirection: "column",
-        height: "80%",
-        width: "70%",
-        backgroundColor: "#fff",
-        marginTop: "2%",
-        marginBottom: "5%"
+	container: {
+		flex: 1,
+		alignItems: "center",
+		backgroundColor: "#00ecff",
+		paddingBottom: "5%",
+	},
+	syllabusList: {
+		flexDirection: "column",
+		height: "80%",
+		width: "70%",
+		backgroundColor: "#fff",
+		marginTop: "2%",
+		marginBottom: "5%",
 
-    },
-    syllabusListHeader:{
-        alignItems: "center",
-        paddingTop: "3%",
-        paddingBottom: "3%"
-    },
-    syllabusListOption: {
-        alignItems: "stretch"
-    }
+	},
+	syllabusListHeader: {
+		alignItems: "center",
+		paddingTop: "3%",
+		paddingBottom: "3%",
+	},
+	syllabusListOption: {
+		alignItems: "stretch",
+	},
 });
 
 
-const mapDispatchToProps = dispatch => {
-    return {
-        selectedSyllabus: syllabus_id =>{
-            dispatch(selectSyllabus(syllabus_id))
-        }
-    }
-};
+const mapDispatchToProps = dispatch => ({
+	selectedSyllabus: (syllabusId) => {
+		dispatch(selectSyllabus(syllabusId));
+	},
+});
 
 export default connect(null, mapDispatchToProps)(SyllabusScreen);
-

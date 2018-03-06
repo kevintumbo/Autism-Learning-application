@@ -7,12 +7,14 @@ module.exports = {
     "parser": "babel-eslint",
     "plugins": [
         "react",
-        "jsx-a11y",
         "import"
     ],
     "rules": {
         "indent": [2, "tab"],
         "no-tabs": 0,
+        "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
+        "react/jsx-indent": [2, "tab"],
+        "react/jsx-indent-props": [2, "tab"],
         "linebreak-style": [
             "error",
             "unix"
