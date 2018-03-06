@@ -1,14 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { ScrollView, View, StyleSheet, Text } from "react-native";
+import { ScrollView, View, Text } from "react-native";
+import PropTypes from "prop-types";
 import SQLite from "react-native-sqlite-storage";
 import ProgressCircle from "react-native-progress-circle";
 import QuestionCard from "../../components/learning/questionCard";
 import SuccessModal from "../../components/tabs/modals/successModal";
 import FailureModal from "../../components/tabs/modals/failureModal";
 import CompletionModal from "../../components/tabs/modals/completionModal";
+import questionStyles from "./styles/questionStyles.styles";
 
 class QuestionScreen extends Component {
+	static propTypes = {
+		navigator: PropTypes.object.isRequired,
+		selected_unit: PropTypes.number.isRequired,
+	}
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -40,7 +46,6 @@ class QuestionScreen extends Component {
 				this.setState(prevState => ({
 					current_question: prevState.current_question.concat(this.state.questions[0]),
 				}));
-				console.log(this.state.current_question);
 			});
 		});
 	}
@@ -112,12 +117,7 @@ class QuestionScreen extends Component {
 		const currentQuestion = this.state.questions.indexOf(this.state.questions[index]);
 		progress = Math.round((currentQuestion / allQuestions) * 100);
 		this.setState({ progress });
-		console.log("all_questions", allQuestions);
-		console.log("current_question", currentQuestion);
-		console.log("progress", progress);
-		console.log(this.state.progress);
 	}
-
 
 	render() {
 		const question = this.state.current_question.map(question => (
@@ -161,15 +161,6 @@ class QuestionScreen extends Component {
 		);
 	}
 }
-
-const questionStyles = StyleSheet.create({
-	container: {
-		flex: 1,
-		alignItems: "center",
-		backgroundColor: "#00ecff",
-		paddingBottom: "5%",
-	},
-});
 
 const mapStateToProps = state => ({
 	selected_unit: state.unit.selected_unit,

@@ -1,14 +1,19 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import SQLite from "react-native-sqlite-storage";
 import { connect } from "react-redux";
-
+import PropTypes from "prop-types";
 import SyllabusOutput from "../../components/learning/syllabusList";
 import AppTabs from "../../components/tabs/AppTabs";
 import { selectSyllabus } from "../../store/actions/syllabus";
+import syllabusStyles from "./styles/syllabusStyles.styles";
 
 
 class SyllabusScreen extends Component {
+	static propTypes = {
+		selectedSyllabus: PropTypes.number.isRequired,
+		navigator: PropTypes.object.isRequired,
+	}
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -69,7 +74,7 @@ class SyllabusScreen extends Component {
 						<View style={syllabusStyles.syllabusList}>
 							<View style={syllabusStyles.syllabusListHeader}>
 								<Text>
-																Learning App Contents
+									Learning App Contents
 								</Text>
 							</View>
 							<View>
@@ -83,31 +88,7 @@ class SyllabusScreen extends Component {
 		}
 }
 
-const syllabusStyles = StyleSheet.create({
-	container: {
-		flex: 1,
-		alignItems: "center",
-		backgroundColor: "#00ecff",
-		paddingBottom: "5%",
-	},
-	syllabusList: {
-		flexDirection: "column",
-		height: "80%",
-		width: "70%",
-		backgroundColor: "#fff",
-		marginTop: "2%",
-		marginBottom: "5%",
 
-	},
-	syllabusListHeader: {
-		alignItems: "center",
-		paddingTop: "3%",
-		paddingBottom: "3%",
-	},
-	syllabusListOption: {
-		alignItems: "stretch",
-	},
-});
 
 
 const mapDispatchToProps = dispatch => ({

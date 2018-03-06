@@ -1,9 +1,14 @@
 import React, { Component } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, Text, TextInput, View } from "react-native";
+import PropTypes from "prop-types";
 import SQLite from "react-native-sqlite-storage";
 import validator from "../../utility/validation";
+import styles from "./styles/register.styles";
 
 export default class RegisterScreen extends Component {
+	static propTypes = {
+		navigator: PropTypes.object.isRequired,
+	}
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -133,34 +138,3 @@ export default class RegisterScreen extends Component {
 		);
 	}
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#00ecff",
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	heading: {
-		color: "#000",
-		fontSize: 19,
-		fontWeight: "bold",
-	},
-	inputView: {
-		width: "80%",
-	},
-
-	textInput: {
-		width: "100%",
-		marginBottom: "5%",
-		padding: "2%",
-		color: "#fff",
-	},
-	loginView: {
-		width: "80%",
-	},
-	button: {
-		width: "100%",
-		color: "#DA4255",
-	},
-});

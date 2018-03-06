@@ -1,12 +1,18 @@
 import React, { Component } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import SQLite from "react-native-sqlite-storage";
-
 import UnitOutput from "../../components/learning/unitList";
 import { selectUnit } from "../../store/actions/syllabus";
+import unitStyles from "./styles/unitStyles.styles";
 
 class UnitScreen extends Component {
+	static propTypes = {
+		syllabus_selected: PropTypes.number.isRequired,
+		selectedUnit: PropTypes.number.isRequired,
+		navigator: PropTypes.object.isRequired,
+	}
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -21,7 +27,6 @@ class UnitScreen extends Component {
 		);
 		db.transaction((tx) => {
 			tx.executeSql(`SELECT * FROM units WHERE syllabus_id = ${this.props.syllabus_selected}`, [], (tx, results) => {
-				console.log("Query completed");
 				// Get rows with Web SQL Database spec compliance.
 				const len = results.rows.length;
 				for (let i = 0; i < len; i += 1) {
@@ -71,26 +76,7 @@ class UnitScreen extends Component {
 			</ScrollView>
 		);
 	}
-
 }
-
-const unitStyles = StyleSheet.create({
-	container: {
-		flex: 1,
-		alignItems: "center",
-		backgroundColor: "#00ecff",
-		paddingBottom: "2%",
-	},
-	unitList: {
-		flexDirection: "column",
-		height: "95%",
-		width: "70%",
-		backgroundColor: "#fff",
-		marginTop: "2%",
-		marginBottom: "5%",
-
-	},
-});
 
 const mapStateToProps = state => ({
 	syllabus_selected: state.syllabus.selected_syllabus,
@@ -103,4 +89,4 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(UnitScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(UnitScreen);

@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import SQLite from "react-native-sqlite-storage";
-import { Button, View, Text, TextInput, StyleSheet } from "react-native";
+import PropTypes from "prop-types";
+import { Button, View, Text, TextInput } from "react-native";
 import validator from "../../utility/validation";
+import logStyles from "./styles/login.styles";
 
 export default class LoginScreen extends Component {
+	static propTypes = {
+		navigator: PropTypes.object.isRequired,
+	}
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -108,31 +113,3 @@ export default class LoginScreen extends Component {
 		);
 	}
 }
-
-const logStyles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#00ecff",
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	heading: {
-		color: "#000",
-		fontSize: 19,
-		fontWeight: "bold",
-	},
-	inputView: {
-		width: "80%",
-		marginBottom: "5%",
-	},
-	textInput: {
-		width: "100%",
-		marginBottom: "5%",
-	},
-	createAccount: {
-		width: "80%",
-	},
-	text: {
-		alignItems: "center",
-	},
-});
