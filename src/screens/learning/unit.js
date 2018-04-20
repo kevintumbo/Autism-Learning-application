@@ -8,9 +8,13 @@ import { selectUnit } from "../../store/actions/syllabus";
 import unitStyles from "./styles/unitStyles.styles";
 
 class UnitScreen extends Component {
+	static navigatorStyle = {
+		tabBarHidden: true,
+	};
+
 	static propTypes = {
 		syllabus_selected: PropTypes.number.isRequired,
-		selectedUnit: PropTypes.number.isRequired,
+		selectedUnit: PropTypes.func.isRequired,
 		navigator: PropTypes.object.isRequired,
 	}
 	constructor(props) {
@@ -29,6 +33,7 @@ class UnitScreen extends Component {
 			tx.executeSql(`SELECT * FROM units WHERE syllabus_id = ${this.props.syllabus_selected}`, [], (tx, results) => {
 				// Get rows with Web SQL Database spec compliance.
 				const len = results.rows.length;
+				console.log(len);
 				for (let i = 0; i < len; i += 1) {
 					const row = results.rows.item(i);
 					this.setState(prevState => ({ units: prevState.units.concat(row) }));

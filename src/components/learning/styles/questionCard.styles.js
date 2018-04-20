@@ -5,6 +5,10 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 	},
+	questionContainer: {
+		flexDirection: "row",
+		justifyContent: "center",
+	},
 	question: {
 		fontSize: 22,
 		fontWeight: "bold",
@@ -16,6 +20,12 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		width: "40%",
+	},
+	imageContainer: {
+		flexDirection: "row",
+		justifyContent: "space-around",
+		marginTop: "1%",
+		width: "100%",
 	},
 });
 

@@ -11,6 +11,10 @@ import CompletionModal from "../../components/tabs/modals/completionModal";
 import questionStyles from "./styles/questionStyles.styles";
 
 class QuestionScreen extends Component {
+	static navigatorStyle = {
+		tabBarHidden: true,
+	};
+
 	static propTypes = {
 		navigator: PropTypes.object.isRequired,
 		selected_unit: PropTypes.number.isRequired,
@@ -46,6 +50,7 @@ class QuestionScreen extends Component {
 				this.setState(prevState => ({
 					current_question: prevState.current_question.concat(this.state.questions[0]),
 				}));
+				console.log(this.state.current_question);
 			});
 		});
 	}

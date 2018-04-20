@@ -11,7 +11,7 @@ import syllabusStyles from "./styles/syllabusStyles.styles";
 
 class SyllabusScreen extends Component {
 	static propTypes = {
-		selectedSyllabus: PropTypes.number.isRequired,
+		selectedSyllabus: PropTypes.func.isRequired,
 		navigator: PropTypes.object.isRequired,
 	}
 	constructor(props) {
@@ -70,7 +70,6 @@ class SyllabusScreen extends Component {
 			return (
 				<ScrollView contentContainerStyle={{ flexGrow: 1 }}>
 					<View style={syllabusStyles.container}>
-						<AppTabs />
 						<View style={syllabusStyles.syllabusList}>
 							<View style={syllabusStyles.syllabusListHeader}>
 								<Text>
@@ -87,8 +86,6 @@ class SyllabusScreen extends Component {
 			);
 		}
 }
-
-
 
 
 const mapDispatchToProps = dispatch => ({
