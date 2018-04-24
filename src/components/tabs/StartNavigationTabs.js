@@ -17,7 +17,7 @@ const startMainTabs = () => {
 				{
 					label: "Progress",
 					icon: sources[1],
-					screen: "AutismApplication.ProgressScreen",
+					screen: "AutismApplication.SyllabusProgressScreen",
 					title: "Progress",
 				},
 			],

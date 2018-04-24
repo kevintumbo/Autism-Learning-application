@@ -9,6 +9,12 @@ const Authreducer = (state = initialState, action) => {
 			token: action.token,
 			isAuthenticated: true,
 		};
+	case SUCCESS_AUTHENTICATION:
+		return {
+			...state,
+			Name: action.user,
+			id: action.id,
+		};
 	default:
 		return state;
 	}

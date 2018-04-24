@@ -6,7 +6,8 @@ import RegisterScreen from "./src/screens/auth/register";
 import SyllabusScreen from "./src/screens/learning/syllabus";
 import UnitScreen from "./src/screens/learning/unit";
 import QuestionScreen from "./src/screens/learning/question";
-import ProgressScreen from "./src/screens/progress/progress";
+import SyllabusProgressScreen from "./src/screens/progress/syllabusProgress";
+import UnitProgressScreen from "./src/screens/progress/unitProgress";
 
 import configureStore from "./src/store/configureStore";
 
@@ -19,7 +20,8 @@ Navigation.registerComponent("AutismApplication.RegisterScreen", () => RegisterS
 Navigation.registerComponent("AutismApplication.SyllabusScreen", () => SyllabusScreen, store, Provider);
 Navigation.registerComponent("AutismApplication.UnitScreen", () => UnitScreen, store, Provider);
 Navigation.registerComponent("AutismApplication.QuestionScreen", () => QuestionScreen, store, Provider);
-Navigation.registerComponent("AutismApplication.ProgressScreen", () => ProgressScreen, store, Provider);
+Navigation.registerComponent("AutismApplication.SyllabusProgressScreen", () => SyllabusProgressScreen, store, Provider);
+Navigation.registerComponent("AutismApplication.UnitProgressScreen", () => UnitProgressScreen, store, Provider);
 
 // Start the app
 

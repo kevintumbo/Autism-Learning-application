@@ -4,7 +4,6 @@ import SQLite from "react-native-sqlite-storage";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import SyllabusOutput from "../../components/learning/syllabusList";
-import AppTabs from "../../components/tabs/AppTabs";
 import { selectSyllabus } from "../../store/actions/syllabus";
 import syllabusStyles from "./styles/syllabusStyles.styles";
 
@@ -28,6 +27,7 @@ class SyllabusScreen extends Component {
 		);
 		db.transaction((tx) => {
 			tx.executeSql("SELECT * FROM syllabus", [], (tx, results) => {
+				console.log(results.rows.item(1));
 				// Get rows with Web SQL Database spec compliance.
 				const len = results.rows.length;
 				for (let i = 0; i < len; i += 1) {

@@ -3,8 +3,9 @@ import jwt from "react-native-pure-jwt";
 import startMainTabs from "../../../components/tabs/StartNavigationTabs";
 import { SET_TOKEN, SUCCESS_AUTHENTICATION } from "./actionTypes";
 
-const loginSuccess = user => ({
+const loginSuccess = (user, id) => ({
 	user,
+	id,
 	type: SUCCESS_AUTHENTICATION,
 });
 
@@ -29,6 +30,8 @@ const loginUserAction = (name, password) => (dispatch) => {
 			// Get rows with Web SQL Database spec compliance.
 			const len = results.rows.length;
 			const row = results.rows.item(0);
+			const user = row.name;
+			const { id } = row;
 			if (len > 0) {
 				jwt
 					.sign(
@@ -43,6 +46,7 @@ const loginUserAction = (name, password) => (dispatch) => {
 					)
 					.then((token) => {
 						dispatch(setToken(token));
+						dispatch(loginSuccess(user, id));
 						startMainTabs();
 					}).catch(console.error);
 			} else {

@@ -33,7 +33,6 @@ class UnitScreen extends Component {
 			tx.executeSql(`SELECT * FROM units WHERE syllabus_id = ${this.props.syllabus_selected}`, [], (tx, results) => {
 				// Get rows with Web SQL Database spec compliance.
 				const len = results.rows.length;
-				console.log(len);
 				for (let i = 0; i < len; i += 1) {
 					const row = results.rows.item(i);
 					this.setState(prevState => ({ units: prevState.units.concat(row) }));
