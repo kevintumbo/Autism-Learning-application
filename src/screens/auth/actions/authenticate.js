@@ -18,10 +18,7 @@ const loginFailure = response => ({
 	response,
 });
 
-const db = SQLite.openDatabase(
-	{ name: "app.db", createFromLocation: "~app.db" },
-	this.openCB, this.successCB, this.errorCB,
-);
+const db = SQLite.openDatabase({ name: "app.db", createFromLocation: "~app.db" } );
 
 
 const loginUserAction = (name, password) => (dispatch) => {
