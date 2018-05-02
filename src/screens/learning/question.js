@@ -9,7 +9,12 @@ import SuccessModal from "../../components/tabs/modals/successModal";
 import FailureModal from "../../components/tabs/modals/failureModal";
 import CompletionModal from "../../components/tabs/modals/completionModal";
 import questionStyles from "./styles/questionStyles.styles";
+import { getSyllabusAction } from "../progress/actions/progress";
 
+const db = SQLite.openDatabase(
+	{ name: "app.db", createFromLocation: "~app.db" },
+	this.openCB, this.successCB, this.errorCB,
+);
 class QuestionScreen extends Component {
 	static navigatorStyle = {
 		tabBarHidden: true,
@@ -18,7 +23,11 @@ class QuestionScreen extends Component {
 	static propTypes = {
 		navigator: PropTypes.object.isRequired,
 		selected_unit: PropTypes.number.isRequired,
+		syllabusId: PropTypes.number.isRequired,
+		userId: PropTypes.number.isRequired,
+		getSyllabusAction: PropTypes.func.isRequired,
 	}
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -32,10 +41,6 @@ class QuestionScreen extends Component {
 	}
 
 	componentWillMount() {
-		const db = SQLite.openDatabase(
-			{ name: "app.db", createFromLocation: "~app.db" },
-			this.openCB, this.successCB, this.errorCB,
-		);
 		db.transaction((tx) => {
 			tx.executeSql(`SELECT * FROM questions where unit_id = ${this.props.selected_unit}`, [], (tx, results) => {
 				// Get rows with Web SQL Database spec compliance.
@@ -77,6 +82,8 @@ class QuestionScreen extends Component {
 				this.setState({ successModalVisible: true });
 			} else {
 				this.setState({ completionModalVisible: true });
+				this.saveProgress(this.props.userId, this.props.selected_unit, this.props.syllabusId);
+				this.props.getSyllabusAction(this.props.userId);
 			}
 		}
 	};
@@ -115,6 +122,21 @@ class QuestionScreen extends Component {
 			this.progress(index + 1);
 		}
 	};
+
+	saveProgress = (userId, unitId, syllabusId) => (
+		db.transaction((tx) => {
+			tx.executeSql(`SELECT * FROM progress WHERE user_id = ${userId} AND unit_id = ${unitId}`, [], (tx, results) => {
+				const len = results.rows.length;
+				if (len > 0) {
+					console.log("This unit has already been completed");
+				} else {
+					tx.executeSql(`INSERT into progress(user_id, unit_id, syllabus_id) VALUES (${userId}, ${unitId}, ${syllabusId})`, [], () => {
+						console.log("Congratulations. You have completed this unit");
+					});
+				}
+			});
+		})
+	);
 
 	progress = (index) => {
 		let progress = 0;
@@ -169,10 +191,12 @@ class QuestionScreen extends Component {
 
 const mapStateToProps = state => ({
 	selected_unit: state.unit.selected_unit,
+	syllabusId: state.syllabus.selected_syllabus,
+	userId: state.auth.id,
 });
 
-const mapDispatchToProps = dispatch => ({
-
-});
+const mapDispatchToProps = {
+	getSyllabusAction,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionScreen);

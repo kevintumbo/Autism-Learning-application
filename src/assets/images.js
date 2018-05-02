@@ -138,7 +138,6 @@ const images = {
 	sad: require("./autism/sad.jpg"),
 	sand: require("./autism/sand.jpg"),
 	School: require("./autism/School.jpg"),
-	school: require("./autism/school.jpg"),
 	shelter: require("./autism/shelter.png"),
 	shoes: require("./autism/shoes.jpg"),
 	siblings: require("./autism/siblings.jpg"),
