@@ -10,6 +10,7 @@ import com.facebook.soloader.SoLoader;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativenavigation.NavigationApplication;
 import org.pgsqlite.SQLitePluginPackage;
+import com.zaguini.rnjwt.RNJwtPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +27,7 @@ public class MainApplication extends NavigationApplication {
   //   protected List<ReactPackage> getPackages() {
   //     return Arrays.<ReactPackage>asList(
   //         new MainReactPackage(),
+  //         new RandomBytesPackage(),
   //         new VectorIconsPackage()
   //     );
   //   }
@@ -58,7 +60,8 @@ public class MainApplication extends NavigationApplication {
         return Arrays.<ReactPackage>asList(
             // eg. new VectorIconsPackage()
             new SQLitePluginPackage(),   // register SQLite Plugin here
-            new VectorIconsPackage()
+            new VectorIconsPackage(),
+            new RNJwtPackage()
         );
     }
 
