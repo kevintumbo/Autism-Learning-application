@@ -77,7 +77,7 @@ class LoginScreen extends Component {
 					/>
 					<Button
 						onPress={this.login}
-						style={logStyles.button}
+						style={logStyles.loginButton}
 						title="Log In"
 					/>
 				</View>

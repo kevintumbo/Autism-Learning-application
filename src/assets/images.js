@@ -137,7 +137,7 @@ const images = {
 	rubbish: require("./autism/rubbish.jpg"),
 	sad: require("./autism/sad.jpg"),
 	sand: require("./autism/sand.jpg"),
-	School: require("./autism/School.jpg"),
+	School: require("./autism/school.jpg"),
 	shelter: require("./autism/shelter.png"),
 	shoes: require("./autism/shoes.jpg"),
 	siblings: require("./autism/siblings.jpg"),
